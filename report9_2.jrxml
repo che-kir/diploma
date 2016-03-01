@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="210a752e-04ba-4c50-812f-c5d4e1d649ad">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[select FIO, 'имеет наибольшее количество сеансов'
+from patient p, seans s where p.IdP = s.IdP group by p.IdP, FIO
+having count(*) >= all 
+(select count(*) from seans group by IdP)
+union select FIO, 'не проходил обследование ещё'
+from patient where IdP not in 
+(select IdP from seans)]]>
+	</queryString>
+	<field name="FIO" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="имеет наибольшее количество сеансов" class="java.lang.String"/>
+	<group name="FIO">
+		<groupExpression><![CDATA[$F{FIO}]]></groupExpression>
+		<groupHeader>
+			<band height="40">
+				<textField>
+					<reportElement style="SubTitle" x="197" y="13" width="356" height="24" forecolor="#333333" uuid="7c96992e-02f2-4d98-9876-a26766bc1ceb"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{FIO}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="e3c20762-77a5-4181-86c9-a7756df5d0b2"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="56" y="13" width="141" height="24" uuid="1e465b6e-8cb1-4b92-8e4f-2acc94b627d2"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[ФИО пациента]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="6"/>
+		</groupFooter>
+	</group>
+	<group name="имеет наибольшее количество сеансов">
+		<groupExpression><![CDATA[$F{имеет наибольшее количество сеансов}]]></groupExpression>
+		<groupHeader>
+			<band height="30">
+				<textField>
+					<reportElement style="SubTitle" x="197" y="4" width="356" height="20" uuid="ea118ad0-ba0d-4b8b-8d83-e912d4547f54"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{имеет наибольшее количество сеансов}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="56" y="0" width="141" height="24" uuid="f43babf0-450b-453e-8b89-4c241fe3bee0"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[Комментарий]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="b5caca8d-df6e-413b-b01e-8842c5fba910"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="bf7a2937-2d6f-48d9-b290-f9ad269c6fb4"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Отчёт]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="0" y="39" width="553" height="22" forecolor="#FFFFFF" uuid="1bf9d181-95f0-4e89-b8f1-acf6a211b486"/>
+				<textElement textAlignment="Right">
+					<font size="10"/>
+				</textElement>
+				<text><![CDATA[Список пациентов с комментарием "имеет набольшее количество сеансов", "не проходил обследование ещё"]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="549eccd2-aa2e-4e98-970e-6259ae6e9d21"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="555" height="1" uuid="ac4f8f28-5c57-4aed-aac0-cff0fe24ec1c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="47634be7-2b9d-4aaa-8f31-88dfee122b1e"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="aa200aef-ce6f-4457-bc30-9aa7a44c38c5"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="6dc3a687-ea62-499a-a6b6-a744b2e5b809"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="1a678b1a-82ab-44ef-812d-915551e003c3"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

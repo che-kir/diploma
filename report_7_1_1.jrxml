@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="212ab805-d39a-4897-836d-81a25955aa63">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Arial" fontSize="26" isBold="true" pdfFontName="Helvetica-Bold"/>
+	<style name="SubTitle" forecolor="#666666" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<queryString language="SQL">
+		<![CDATA[select CategoryName, HSFIO, count(distinct(s.`IdP`))
+from (hospitalstaff h join seans s on h.`IdHS` = s.`IdHS`) join category c on h.IdCat = c.IdCat
+having count(*) >= all
+(select count(*)
+from (hospitalstaff h join seans s on h.`IdHS` = s.`IdHS`) join category c on h.IdCat = c.IdCat)]]>
+	</queryString>
+	<field name="CategoryName" class="java.lang.String"/>
+	<field name="HSFIO" class="java.lang.String"/>
+	<field name="count(distinct(s.`IdP`))" class="java.lang.Long"/>
+	<group name="CategoryName">
+		<groupExpression><![CDATA[$F{CategoryName}]]></groupExpression>
+		<groupHeader>
+			<band height="37">
+				<textField>
+					<reportElement style="SubTitle" x="263" y="13" width="290" height="24" forecolor="#333333" uuid="7dafe74f-5a33-4809-8041-809768695e8c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{CategoryName}]]></textFieldExpression>
+				</textField>
+				<rectangle>
+					<reportElement mode="Opaque" x="0" y="13" width="36" height="24" forecolor="#CCCCCC" backcolor="#CCCCCC" uuid="328c9bc1-902f-4ed3-a6e8-2f9f69df31b1"/>
+				</rectangle>
+				<staticText>
+					<reportElement x="37" y="13" width="226" height="24" uuid="0a9b1cf9-26da-4e29-b5b4-0b35f516a310"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[Категория:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="31"/>
+		</groupFooter>
+	</group>
+	<group name="HSFIO">
+		<groupExpression><![CDATA[$F{HSFIO}]]></groupExpression>
+		<groupHeader>
+			<band height="24">
+				<textField>
+					<reportElement style="SubTitle" x="263" y="0" width="290" height="24" uuid="73a1ca50-ed60-4b91-880f-979bbfe76749"/>
+					<textElement>
+						<font size="16" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{HSFIO}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="37" y="0" width="226" height="24" uuid="b8adcbd7-7266-44e0-8e0e-1f92dd7eb34e"/>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<text><![CDATA[ФИО медработника:]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+	</group>
+	<group name="count(distinct(s.`IdP`))">
+		<groupExpression><![CDATA[$F{count(distinct(s.`IdP`))}]]></groupExpression>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="70" splitType="Stretch">
+			<image>
+				<reportElement x="-20" y="0" width="595" height="64" uuid="dc6df6eb-753f-46c8-9cbf-a094ef312054"/>
+				<imageExpression><![CDATA["wood.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="0" y="5" width="263" height="33" uuid="cf49b06c-b6ea-4dc1-8481-cbeb8519ac96"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Отчёт]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="SubTitle" x="2" y="38" width="553" height="22" forecolor="#FFFFFF" uuid="eb112382-9d59-402f-8708-16af80853296"/>
+				<textElement textAlignment="Right">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Медработник, который диагностирует макс. количество пациентов среди всех категорий.]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="36" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="35" width="555" height="1" uuid="631e6598-0a5d-41a5-92c0-e1e033fe55f2"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="32" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="24" width="555" height="1" uuid="167c05da-00e5-4a77-b2a0-fb5c79c6fa3a"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement style="SubTitle" x="263" y="0" width="290" height="24" forecolor="#333333" uuid="2bcf079d-5258-4239-92a0-76ebb4c82c58"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{count(distinct(s.`IdP`))}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="37" y="1" width="226" height="24" uuid="e59e7c28-2333-45a0-a2ac-830deb82d272"/>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[Количество пациентов:]]></text>
+			</staticText>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1" uuid="5f62ad39-035b-478d-bfe5-dc70f9cad166"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement style="Column header" x="433" y="0" width="80" height="20" uuid="0e3b235b-ef14-48c6-80ed-735b4c1471dc"/>
+				<textElement textAlignment="Right">
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement style="Column header" x="513" y="0" width="40" height="20" uuid="6325d78d-21a8-4165-9cda-7dacf0cd8786"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement style="Column header" x="0" y="0" width="197" height="20" uuid="4a7dbd24-ef61-47cd-b3f7-20b0297e1dbb"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
